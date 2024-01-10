@@ -12,4 +12,9 @@ public class Controller {
     public String getString(){
         return "test111";
     }
+
+    @GetMapping("/2")
+    public String get2(){
+        return "test222";
+    }
 }
