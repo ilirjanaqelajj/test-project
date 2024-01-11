@@ -17,4 +17,9 @@ public class Controller {
     public String get2(){
         return "test222";
     }
+
+    @GetMapping("/3")
+    public String get3(){
+        return "test333";
+    }
 }
