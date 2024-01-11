@@ -22,4 +22,9 @@ public class Controller {
     public String get3(){
         return "test333";
     }
+
+    @GetMapping("/4")
+    public String get3(){
+        return "test444";
+    }
 }
