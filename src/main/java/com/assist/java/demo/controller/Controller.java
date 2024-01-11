@@ -24,7 +24,7 @@ public class Controller {
     }
 
     @GetMapping("/4")
-    public String get3(){
+    public String get4(){
         return "test444";
     }
 }
