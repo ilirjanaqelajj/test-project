@@ -27,4 +27,9 @@ public class Controller {
     public String get4(){
         return "test444";
     }
+
+    @GetMapping("/5")
+    public String get5(){
+        return "workssss";
+    }
 }
