@@ -32,4 +32,9 @@ public class Controller {
     public String get5(){
         return "workssss";
     }
+
+    @GetMapping("/6")
+    public String get6(){
+        return "workssss66";
+    }
 }
