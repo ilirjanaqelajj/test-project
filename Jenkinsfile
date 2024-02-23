@@ -1,28 +1,31 @@
 pipeline {
-	agent any
+    agent any
+  environment {
+    MAVEN_ARGS=" -e clean install"
+    registry = ""
+    dockerContainerName = 'testapi'
+    dockerImageName = 'testapi-api'
+  }
+  stages {
+    stage('Build') {
+       steps {
+   withMaven(maven: 'MAVEN_ENV') {
+            sh "mvn ${MAVEN_ARGS}"
+        }
+       }
+    }
 
-	tools {
-		jdk 'java-17'
-	}
-
-	stages {
-
-		stage('Build'){
-			steps {
-				bat "mvn clean install -DskipTests"
-			}
-		}
-
-		stage('Test'){
-			steps{
-				bat "mvn test"
-			}
-		}
-
-		stage('Deploy') {
-			steps {
-			    bat "mvn jar:jar deploy:deploy"
-			}
-		}
-	}
+ stage('clean container') {
+      steps {
+       sh 'docker ps -f name=${dockerContainerName} -q | xargs --no-run-if-empty docker container stop'
+       sh 'docker container ls -a -fname=${dockerContainerName} -q | xargs -r docker container rm'
+       sh 'docker images -q --filter=reference=${dockerImageName} | xargs --no-run-if-empty docker rmi -f'
+      }
+    }
+  stage('docker-compose start') {
+      steps {
+       sh 'docker compose up -d'
+      }
+    }
+  }
 }
